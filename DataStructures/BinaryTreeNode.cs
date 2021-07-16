@@ -14,11 +14,12 @@ namespace DataStructures
 
         public T Value => _value;
         public BinaryTreeNode<T> Left
+
         {
             get => _left;
             internal set => _left = value;
         }
-        public BinaryTreeNode<T> Rigth
+        public BinaryTreeNode<T> Right
         {
             get => _right;
             internal set => _right = value;

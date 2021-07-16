@@ -49,7 +49,7 @@ namespace DataStructures
         }
         private void AddNode(BinaryTreeNode<T> node, T value)
         {
-            if (node.Value.CompareTo(value) < 0)
+            if (node.Value.CompareTo(value) > 0)
             {
                 if(node.Left == null)
                 {
@@ -60,28 +60,60 @@ namespace DataStructures
                     AddNode(node.Left, value);
                 }
             }
-            if(node.Value.CompareTo(value) > 0)
+            if(node.Value.CompareTo(value) < 0)
             {
-                if(node.Rigth == null)
+                if(node.Right == null)
                 {
-                    node.Rigth = new BinaryTreeNode<T>(value);
+                    node.Right = new BinaryTreeNode<T>(value);
                 }
                 else
                 {
-                    AddNode(node.Rigth, value);
+                    AddNode(node.Right, value);
                 }
             }
         }
-        //private List<T> InfixTraversal()
-        //{
-        //    if (_root != null)
-        //    {
-        //        List<T> result = new List<T>(Count);
-        //        Stack<BinaryTreeNode<T>> stack = new Stack<BinaryTreeNode<T>>();
+        public List<T> InfixTraverse()
+        {
+            List<T> result = new List<T>(Count);
+            if (_root != null)
+            {
+                Stack<BinaryTreeNode<T>> stack = new Stack<BinaryTreeNode<T>>();
+                bool goLeft = true;
 
-
-        //    }
-        //}
+                stack.Push(_root);
+                var current = stack.Peek();
+                while (stack.Count > 0)
+                {
+   
+                    if (goLeft)
+                    {
+                        if (current.Left == null)
+                        {
+                            goLeft = false;
+                        }
+                        else
+                        {
+                            stack.Push(current);
+                            current = current.Left;
+                        }
+                    }
+                    else
+                    {
+                        result.Add(current.Value);
+                        if (current.Right != null)
+                        {
+                            current = current.Right;
+                            goLeft = true;
+                        }
+                        else 
+                        {
+                            current = stack.Pop();
+                        }
+                    }
+                }
+            }
+            return result;
+        }
         private BinaryTreeNode<T> Search(T value)
         {
             var current = _root;
@@ -92,13 +124,13 @@ namespace DataStructures
                 {
                     return current;
                 }
-                if(comparer < 0)
+                if(comparer > 0)
                 {
                     current = current.Left;
                 }
-                if(comparer >0)
+                if(comparer < 0)
                 {
-                    current = current.Rigth;
+                    current = current.Right;
                 }
             }
             return null;
