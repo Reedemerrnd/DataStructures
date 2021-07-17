@@ -20,14 +20,21 @@ namespace DataStructures
             Tree.Add(25);
             Tree.Add(14);
 
-            Console.WriteLine(Tree.Contains(25));
-            Console.WriteLine(Tree.Contains(26));
-            Console.WriteLine(Tree.Count);
-            Console.WriteLine();
-            foreach (var item in Tree.InfixTraverse())
+            //Console.WriteLine();
+            //foreach (var item in Tree.InfixTraverse())
+            //{
+            //    Console.WriteLine(item);
+            //}
+            foreach (var item in Tree.TraverseTreeInorder())
             {
                 Console.WriteLine(item);
             }
+
+            Console.WriteLine();
+            //foreach (var item in Tree.PostfixTraverse())
+            //{
+            //    Console.WriteLine(item);
+            //}
             Console.ReadLine();
         }
     }
