@@ -19,22 +19,38 @@ namespace DataStructures
             Tree.Add(30);
             Tree.Add(25);
             Tree.Add(14);
-
-            //Console.WriteLine();
-            //foreach (var item in Tree.InfixTraverse())
-            //{
-            //    Console.WriteLine(item);
-            //}
-            foreach (var item in Tree.TraverseTreeInorder())
-            {
-                Console.WriteLine(item);
-            }
+            Tree.Add(12);
+            Tree.Add(10);
 
             Console.WriteLine();
-            //foreach (var item in Tree.PostfixTraverse())
+            foreach (var item in Tree.ToListPreorder())
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+            foreach (var item in Tree.ToListInorder())
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+            //Console.WriteLine(Tree.Delete(15));
+            Console.WriteLine(Tree.Delete(30));
+
+            //foreach (var item in Tree.ToListPostorder())
             //{
-            //    Console.WriteLine(item);
+            //    Console.Write(item + " ");
             //}
+            //Console.WriteLine();
+            foreach (var item in Tree.ToListPreorder())
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
+            foreach (var item in Tree)
+            {
+                Console.Write(item + " ");
+            }
+            Console.WriteLine();
             Console.ReadLine();
         }
     }

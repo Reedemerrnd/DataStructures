@@ -6,28 +6,19 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    internal class BinaryTreeNode<T> where T : IComparable
+    internal sealed class BinaryTreeNode<T> where T : IComparable
     {
-        private T _value;
-        private BinaryTreeNode<T> _left;
-        private BinaryTreeNode<T> _right;
 
-        public T Value => _value;
-        public BinaryTreeNode<T> Left
 
-        {
-            get => _left;
-            internal set => _left = value;
-        }
-        public BinaryTreeNode<T> Right
-        {
-            get => _right;
-            internal set => _right = value;
-        }
+        internal T Value;
+        internal BinaryTreeNode<T> Left;
 
-        public BinaryTreeNode(T value)
+        internal BinaryTreeNode<T> Right;
+
+
+        internal BinaryTreeNode(T value)
         {
-            _value = value;
+            Value = value;
         }
     }
 }
