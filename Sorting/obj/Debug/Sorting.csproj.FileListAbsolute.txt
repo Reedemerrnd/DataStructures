@@ -1,0 +1,7 @@
+C:\Users\Reed\source\repos\DataStructures\Sorting\bin\Debug\Sorting.exe.config
+C:\Users\Reed\source\repos\DataStructures\Sorting\bin\Debug\Sorting.exe
+C:\Users\Reed\source\repos\DataStructures\Sorting\bin\Debug\Sorting.pdb
+C:\Users\Reed\source\repos\DataStructures\Sorting\obj\Debug\Sorting.csprojAssemblyReference.cache
+C:\Users\Reed\source\repos\DataStructures\Sorting\obj\Debug\Sorting.csproj.CoreCompileInputs.cache
+C:\Users\Reed\source\repos\DataStructures\Sorting\obj\Debug\Sorting.exe
+C:\Users\Reed\source\repos\DataStructures\Sorting\obj\Debug\Sorting.pdb
