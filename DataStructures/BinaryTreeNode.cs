@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    internal sealed class BinaryTreeNode<T> where T : IComparable
+    internal class BinaryTreeNode<T> where T : IComparable
     {
 
 
