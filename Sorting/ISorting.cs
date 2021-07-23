@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sorting
 {
-    public interface ISorting<T>
+    public interface ISorting<T> 
     {
         void Sort(ref IList<T> array);
     }

@@ -10,7 +10,7 @@ namespace Sorting
     {
         internal static IList<T> Swap<T>(this IList<T> coll, int first, int second)
         {
-            T temp = coll[first];
+            var temp = coll[first];
             coll[first] = coll[second];
             coll[second] = temp;
             return coll;

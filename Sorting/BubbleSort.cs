@@ -10,10 +10,10 @@ namespace Sorting
     {
         public void Sort(ref IList<T> array)
         {
-            bool swapped = true;
-            int i = 0;
+            var swapped = true;
+            var i = 0;
             while (swapped)
-            {
+            { 
                 swapped = false;
                 for (int j = 0; j < array.Count - i - 1; j++)
                 {
