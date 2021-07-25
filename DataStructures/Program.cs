@@ -10,7 +10,7 @@ namespace DataStructures
     {
         static void Main(string[] args)
         {
-            var Tree = new BinaryTree<int>();
+            var Tree = new AvlTree<int>();
             Tree.Add(15);
             Tree.Add(8);
             Tree.Add(20);
@@ -21,7 +21,6 @@ namespace DataStructures
             Tree.Add(14);
             Tree.Add(12);
             Tree.Add(10);
-
             Console.WriteLine();
             foreach (var item in Tree.ToListPreorder())
             {
@@ -48,7 +47,7 @@ namespace DataStructures
             Console.WriteLine();
             foreach (var item in Tree)
             {
-                Console.Write(item + " ");
+                Console.Write((item as AVLTreeNode<int>).BalanceFactor + " ");
             }
             Console.WriteLine();
             Console.ReadLine();

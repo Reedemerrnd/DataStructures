@@ -6,29 +6,31 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    internal sealed class AVlTreeNode<T> where T : IComparable
+    class AVLTreeNode<T> : BinaryTreeNode<T> where T : IComparable
     {
-        internal T Value;
-        internal AVlTreeNode<T> Left;
-        internal AVlTreeNode<T> Right;
-        internal int BalanceFactor
+        internal AVLTreeNode<T> LeftAVL => base.Left as AVLTreeNode<T>;
+
+        internal AVLTreeNode<T> RightAVL => base.Right as AVLTreeNode<T>;
+
+        internal int Height => FixHeight();
+
+        private int _height;
+        internal int BalanceFactor => NodeHeigth(LeftAVL) - NodeHeigth(RightAVL);
+
+        public AVLTreeNode(T value) : base(value)
         {
-            get
-            {
-                if(Left == null && Right == null)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return Math.Max(Left.BalanceFactor, Right.BalanceFactor);
-                }
-            }
+            _height = 1;
         }
 
-        internal AVlTreeNode(T value)
+        internal int FixHeight()
         {
-            Value = value; 
+            var left = NodeHeigth(LeftAVL);
+            var right = NodeHeigth(RightAVL);
+            return (left > right ? left : right) + 1;
+        }
+        private int NodeHeigth(AVLTreeNode<T> node)
+        {
+            return node != null ? node.Height : 0;
         }
     }
 }

@@ -7,24 +7,25 @@ using System.Threading.Tasks;
 
 namespace DataStructures
 {
-    public class BinaryTree<T> : IEnumerable<T> where T : IComparable
+    public class BinaryTree<T> : IEnumerable<BinaryTreeNode<T>> where T : IComparable
     { 
-        private int _count;
-        private BinaryTreeNode<T> _root;
+        protected int _count;
+        private protected BinaryTreeNode<T> _root;
 
         public int Count => _count;
         public T Min => Minimum(_root).Value;
         public T Max => Maximum(_root).Value;
 
-        public bool Add(T node)
+        public bool Add(T value)
         {
-            if (Contains(node))
+            if (Contains(value))
             {
                 return false;
             }
+            var node = CreateNode(value);
             if (_root == null)
             {
-                _root = new BinaryTreeNode<T>(node);
+                _root = node;
             }
             else
             {
@@ -32,6 +33,36 @@ namespace DataStructures
             }
             _count++;
             return true;
+        }
+        protected virtual BinaryTreeNode<T> CreateNode(T val)
+        {
+            return new BinaryTreeNode<T>(val);
+        }
+        protected virtual BinaryTreeNode<T> AddNode(BinaryTreeNode<T> node, BinaryTreeNode<T> newNode)
+        {
+            if (node.Value.CompareTo(newNode.Value) > 0)
+            {
+                if (node.Left == null)
+                {
+                    node.Left = newNode;
+                }
+                else
+                {
+                    AddNode(node.Left, newNode);
+                }
+            }
+            if (node.Value.CompareTo(newNode.Value) < 0)
+            {
+                if (node.Right == null)
+                {
+                    node.Right = newNode;
+                }
+                else
+                {
+                    AddNode(node.Right, newNode);
+                }
+            }
+            return node;
         }
 
         public bool Contains(T value)
@@ -45,8 +76,8 @@ namespace DataStructures
                 return false;
             }
         }
-        private BinaryTreeNode<T> Minimum(BinaryTreeNode<T> node) => node.Left == null ? node : Minimum(node.Left);
-        private BinaryTreeNode<T> Maximum(BinaryTreeNode<T> node) => node.Right == null ? node : Maximum(node.Right);
+        protected BinaryTreeNode<T> Minimum(BinaryTreeNode<T> node) => node.Left == null ? node : Minimum(node.Left);
+        protected BinaryTreeNode<T> Maximum(BinaryTreeNode<T> node) => node.Right == null ? node : Maximum(node.Right);
         public void Clear()
         {
             _root = null;
@@ -58,7 +89,7 @@ namespace DataStructures
             InorderTraverse(_root, ref result);
             return result;
         }
-        private void InorderTraverse(BinaryTreeNode<T> node,ref List<T> list)
+        protected void InorderTraverse(BinaryTreeNode<T> node,ref List<T> list)
         {
             if (node != null)
             {
@@ -74,7 +105,7 @@ namespace DataStructures
             PostorderTraverse(_root, ref result);
             return result;
         }
-        private void PostorderTraverse(BinaryTreeNode<T> node, ref List<T> list)
+        protected void PostorderTraverse(BinaryTreeNode<T> node, ref List<T> list)
         {
             if (node != null)
             {
@@ -90,7 +121,7 @@ namespace DataStructures
             PreorderTraverse(_root, ref result);
             return result;
         }
-        private void PreorderTraverse(BinaryTreeNode<T> node, ref List<T> list)
+        protected void PreorderTraverse(BinaryTreeNode<T> node, ref List<T> list)
         {
             if (node != null)
             {
@@ -100,35 +131,8 @@ namespace DataStructures
             }
         }
 
-        private void AddNode(BinaryTreeNode<T> node, T value)
-        {
-            if (node.Value.CompareTo(value) > 0)
-            {
-                if (node.Left == null)
-                {
-                    node.Left = new BinaryTreeNode<T>(value);
-                }
-                else
-                {
-                    AddNode(node.Left, value);
-                }
-            }
-            if (node.Value.CompareTo(value) < 0)
-            {
-                if (node.Right == null)
-                {
-                    node.Right = new BinaryTreeNode<T>(value);
-                }
-                else
-                {
-                    AddNode(node.Right, value);
-                }
-            }
-        }
-
         public bool Delete(T key) =>  RecursiveDelete(_root, key) != null ? true : false;
-
-        private BinaryTreeNode<T> RecursiveDelete(BinaryTreeNode<T> node, T key)
+        protected virtual BinaryTreeNode<T> RecursiveDelete(BinaryTreeNode<T> node, T key)
         {
             if (node == null)
             {
@@ -167,69 +171,8 @@ namespace DataStructures
             }
             return node;
         }
-        private bool DeleteNode(T value)
-        {
-            BinaryTreeNode<T> parent;
-            var node = Search(value, out parent);
-            var compareResult = parent.Value.CompareTo(node.Value);
-            if (node != null)
-            {
 
-                if (node.Left == null && node.Right == null)
-                {
-                    if(compareResult > 0)
-                    {
-                        parent.Left = null;
-                    }
-                    else
-                    {
-                        parent.Right = null;
-                    }
-                }
-                else if (node.Left != null && node.Right == null)
-                {
-                    if(compareResult > 0)
-                    {
-                        parent.Left = node.Left;
-                    }
-                    else
-                    {
-                        parent.Right = node.Left;
-                    }
-                }
-                else if (node.Left == null && node.Right != null)
-                {
-                    if (compareResult > 0)
-                    {
-                        parent.Left = node.Right;
-                    }
-                    else
-                    {
-                        parent.Right = node.Right;
-                    }
-                }
-                else
-                {
-                    var replacement = Minimum(node.Right);
-                    DeleteNode(replacement.Value);
-                    replacement.Left = node.Left;
-                    replacement.Right = node.Right;
-                    if (compareResult > 0)
-                    {
-                        parent.Left = replacement;
-                    }
-                    else
-                    {
-                        parent.Right = replacement;
-                    }
-                }
-                _count--;
-                return true;
-            }
-            return false;
-        }
-
-        private BinaryTreeNode<T> Search(T value)
+        private protected BinaryTreeNode<T> Search(T value)
         {
             var current = _root;
             while (current != null)
@@ -250,7 +193,7 @@ namespace DataStructures
             }
             return null;
         }
-        private BinaryTreeNode<T> Search(T value, out BinaryTreeNode<T> parent)
+        private protected BinaryTreeNode<T> Search(T value, out BinaryTreeNode<T> parent)
         {
             parent = null;
             var current = _root;
@@ -275,11 +218,11 @@ namespace DataStructures
             return null;
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<BinaryTreeNode<T>> GetEnumerator()
         {
             return InorderEnumerator();
         }
-        private IEnumerator<T> InorderEnumerator()
+        private protected IEnumerator<BinaryTreeNode<T>> InorderEnumerator()
         {
             if (_root != null)
             {
@@ -301,7 +244,7 @@ namespace DataStructures
                     }
                     goLeft = false;
 
-                    yield return current.Value;
+                    yield return current;
                     if (current.Right != null)
                     {
                         current = current.Right;
