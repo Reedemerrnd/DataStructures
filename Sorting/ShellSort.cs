@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sorting
 {
@@ -15,7 +12,7 @@ namespace Sorting
                 for (int i = 0; i < array.Count; i += step)
                 {
                     var min = i;
-                    for (int j = i+=step; j < array.Count; j += step)
+                    for (int j = i += step; j < array.Count; j += step)
                     {
                         if (array[i].CompareTo(array[j]) > 0)
                         {

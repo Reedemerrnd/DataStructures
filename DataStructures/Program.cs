@@ -1,26 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataStructures
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var Tree = new AvlTree<int>();
-            Tree.Add(15);
-            Tree.Add(8);
-            Tree.Add(20);
-            Tree.Add(18);
-            Tree.Add(1);
-            Tree.Add(30);
-            Tree.Add(25);
-            Tree.Add(14);
-            Tree.Add(12);
-            Tree.Add(10);
+            var Tree = new AvlTree<int>
+            {
+                15,
+                8,
+                20,
+                18,
+                1,
+                30,
+                25,
+                14,
+                12,
+                10
+            };
             Console.WriteLine();
             foreach (var item in Tree.ToListPreorder())
             {

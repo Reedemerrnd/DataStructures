@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataStructures
 {
     public class BinaryTree<T> : IEnumerable<BinaryTreeNode<T>> where T : IComparable
-    { 
+    {
         protected int _count;
         private protected BinaryTreeNode<T> _root;
 
@@ -22,6 +19,7 @@ namespace DataStructures
             {
                 return false;
             }
+
             var node = CreateNode(value);
             if (_root == null)
             {
@@ -34,10 +32,7 @@ namespace DataStructures
             _count++;
             return true;
         }
-        protected virtual BinaryTreeNode<T> CreateNode(T val)
-        {
-            return new BinaryTreeNode<T>(val);
-        }
+        protected virtual BinaryTreeNode<T> CreateNode(T val) => new BinaryTreeNode<T>(val);
         protected virtual BinaryTreeNode<T> AddNode(BinaryTreeNode<T> node, BinaryTreeNode<T> newNode)
         {
             if (node.Value.CompareTo(newNode.Value) > 0)
@@ -85,11 +80,11 @@ namespace DataStructures
         }
         public List<T> ToListInorder()
         {
-            List<T> result = new List<T>(Count);
+            var result = new List<T>(Count);
             InorderTraverse(_root, ref result);
             return result;
         }
-        protected void InorderTraverse(BinaryTreeNode<T> node,ref List<T> list)
+        protected void InorderTraverse(BinaryTreeNode<T> node, ref List<T> list)
         {
             if (node != null)
             {
@@ -101,7 +96,7 @@ namespace DataStructures
 
         public List<T> ToListPostorder()
         {
-            List<T> result = new List<T>(Count);
+            var result = new List<T>(Count);
             PostorderTraverse(_root, ref result);
             return result;
         }
@@ -117,7 +112,7 @@ namespace DataStructures
 
         public List<T> ToListPreorder()
         {
-            List<T> result = new List<T>(Count);
+            var result = new List<T>(Count);
             PreorderTraverse(_root, ref result);
             return result;
         }
@@ -131,7 +126,7 @@ namespace DataStructures
             }
         }
 
-        public bool Delete(T key) =>  RecursiveDelete(_root, key) != null ? true : false;
+        public bool Delete(T key) => RecursiveDelete(_root, key) != null;
         protected virtual BinaryTreeNode<T> RecursiveDelete(BinaryTreeNode<T> node, T key)
         {
             if (node == null)
@@ -139,23 +134,23 @@ namespace DataStructures
                 return node;
             }
             var compareKey = node.Value.CompareTo(key);
-            if(compareKey > 0)
+            if (compareKey > 0)
             {
                 node.Left = RecursiveDelete(node.Left, key);
             }
             else if (compareKey < 0)
             {
-                node.Right = RecursiveDelete(node.Right,  key);
+                node.Right = RecursiveDelete(node.Right, key);
             }
             else
             {
-                if(node.Left != null && node.Right != null)
+                if (node.Left != null && node.Right != null)
                 {
                     var replacement = Minimum(node.Right);
                     node.Value = replacement.Value;
                     RecursiveDelete(node.Right, replacement.Value);
                 }
-                else if(node.Left != null)
+                else if (node.Left != null)
                 {
                     node = node.Left;
                 }
@@ -167,7 +162,6 @@ namespace DataStructures
                 {
                     node = null;
                 }
-
             }
             return node;
         }
@@ -182,11 +176,13 @@ namespace DataStructures
                 {
                     return current;
                 }
-                if(comparer > 0)
+
+                if (comparer > 0)
                 {
                     current = current.Left;
                 }
-                if(comparer < 0)
+
+                if (comparer < 0)
                 {
                     current = current.Right;
                 }
@@ -200,34 +196,34 @@ namespace DataStructures
             while (current != null)
             {
                 var comparer = current.Value.CompareTo(value);
-                if (comparer == 0)
+                if (comparer != 0)
+                {
+                    if (comparer > 0)
+                    {
+                        parent = current;
+                        current = current.Left;
+                    }
+                    if (comparer < 0)
+                    {
+                        parent = current;
+                        current = current.Right;
+                    }
+                }
+                else
                 {
                     return current;
-                }
-                if (comparer > 0)
-                {
-                    parent = current;
-                    current = current.Left;
-                }
-                if (comparer < 0)
-                {
-                    parent = current;
-                    current = current.Right;
                 }
             }
             return null;
         }
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public IEnumerator<BinaryTreeNode<T>> GetEnumerator()
-        {
-            return InorderEnumerator();
-        }
+        public IEnumerator<BinaryTreeNode<T>> GetEnumerator() => InorderEnumerator();
         private protected IEnumerator<BinaryTreeNode<T>> InorderEnumerator()
         {
             if (_root != null)
             {
-                Stack<BinaryTreeNode<T>> stack = new Stack<BinaryTreeNode<T>>();
-                bool goLeft = true;
+                var stack = new Stack<BinaryTreeNode<T>>();
+                var goLeft = true;
 
                 stack.Push(_root);
                 var current = stack.Peek();
